@@ -1,0 +1,50 @@
+Nume,Bucati,Pret/buc,Pret total
+picioare,6,1.25,7.5
+clema plinta,3.0,0.7,2.0999999999999996
+surub 3.5x16,24,0.0259,0.6215999999999999
+surub blat,4,0.039,0.156
+surub,14,0.1717,2.4038
+plinta,1.0,13.538,13.538
+sipca apa,1.0,10.083,10.083
+surub PFL,22,0.0259,0.5698
+balama aplicata,3,7.2,21.6
+amortizor,2,7.74,15.48
+surub 3.5x16,12,0.0259,0.31079999999999997
+maner,1,10.0,10.0
+balama aplicata,3,7.2,21.6
+amortizor,2,7.74,15.48
+surub 3.5x16,12,0.0259,0.31079999999999997
+maner,1,10.0,10.0
+picioare,4,1.25,5.0
+clema plinta,2.0,0.7,1.4
+surub 3.5x16,16,0.0259,0.4144
+surub blat,4,0.039,0.156
+surub,14,0.1717,2.4038
+plinta,0.6,13.538,8.1228
+surub PFL,32,0.0259,0.8288
+bolt polita,4,0.0384,0.1536
+surub PFL,2,0.0259,0.0518
+bolt polita,4,0.0384,0.1536
+surub PFL,2,0.0259,0.0518
+bolt polita,4,0.0384,0.1536
+surub PFL,2,0.0259,0.0518
+bolt polita,4,0.0384,0.1536
+surub PFL,2,0.0259,0.0518
+bolt polita,4,0.0384,0.1536
+surub PFL,2,0.0259,0.0518
+bolt polita,4,0.0384,0.1536
+surub PFL,2,0.0259,0.0518
+bolt polita,4,0.0384,0.1536
+surub PFL,2,0.0259,0.0518
+TOTAL picioare,10,1.25,12.5
+TOTAL clema plinta,5.0,0.7,3.5
+TOTAL surub 3.5x16,64,0.0259,1.6576
+TOTAL surub blat,8,0.039,0.312
+TOTAL surub,28,0.1717,4.8076
+TOTAL plinta,1.6,13.538,21.660800000000002
+TOTAL sipca apa,1.0,10.083,10.083
+TOTAL surub PFL,68,0.0259,1.7611999999999999
+TOTAL balama aplicata,6,7.2,43.2
+TOTAL amortizor,4,7.74,30.96
+TOTAL maner,2,10.0,20.0
+TOTAL bolt polita,28,0.0384,1.0752
