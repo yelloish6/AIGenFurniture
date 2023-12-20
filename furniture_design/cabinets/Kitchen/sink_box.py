@@ -1,5 +1,5 @@
 from furniture_design.cabinets.Kitchen.base_box import BaseBox
-from furniture_design.cabinets.elements.placa import *
+from furniture_design.cabinets.elements.board import BoardPal
 
 
 class SinkBox(BaseBox):
@@ -11,7 +11,7 @@ class SinkBox(BaseBox):
         #        self.getPFLOO().pop()
         # self.getPFLOO().pop(self.getPFLOO()[0])
         leg_width = 100
-        legatura = PlacaPal(self.label + ".leg", self.width - (2 * self.thick_pal), leg_width, self.thick_pal,
+        legatura = BoardPal(self.label + ".leg", self.width - (2 * self.thick_pal), leg_width, self.thick_pal,
                             self.cant_lab, "", "", "")
         legatura.move("x", self.thick_pal)
         legatura.move("z", self.thick_pal)

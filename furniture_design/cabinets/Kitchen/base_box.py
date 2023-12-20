@@ -1,29 +1,30 @@
-from furniture_design.cabinets.elements.placa import *
-from furniture_design.cabinets.elements.accesoriu import *
 import math
 
-from furniture_design.cabinets.corp import Corp
+from furniture_design.cabinets.cabinet import Cabinet
+from furniture_design.cabinets.elements.accessory import Accessory
+from furniture_design.cabinets.elements.board import BoardPal, Blat
 
-class BaseBox(Corp):
+
+class BaseBox(Cabinet):
     def __init__(self, label, height, width, depth, rules):
         super().__init__(label, height, width, depth, rules)
         picioare = math.ceil(self.width / 400) * 2
-        self.append(accesoriu("picioare", picioare))
-        self.append(accesoriu("clema plinta", picioare / 2))
-        self.append(accesoriu("surub 3.5x16", picioare * 4))  # pentru picioare
-        self.append(accesoriu("surub blat", 4))
-        self.append(accesoriu("surub", 14))
-        self.append(accesoriu("plinta", self.width / 1000))
-        self.append(accesoriu("sipca apa", self.width / 1000))
+        self.append(Accessory("picioare", picioare))
+        self.append(Accessory("clema plinta", picioare / 2))
+        self.append(Accessory("surub 3.5x16", picioare * 4))  # pentru picioare
+        self.append(Accessory("surub blat", 4))
+        self.append(Accessory("surub", 14))
+        self.append(Accessory("plinta", self.width / 1000))
+        self.append(Accessory("sipca apa", self.width / 1000))
 
         # arhitectura
         # jos
-        jos = PlacaPal(self.label + ".jos", self.width, self.depth, self.thick_pal, self.cant_lab, "", self.cant_lab,
+        jos = BoardPal(self.label + ".jos", self.width, self.depth, self.thick_pal, self.cant_lab, "", self.cant_lab,
                        self.cant_lab)
         self.append(jos)
 
         # lat rotit pe Y si ridicat pe z cu grosimea lui jos
-        lat1 = PlacaPal(self.label + ".lat", self.height - self.thick_pal, self.depth, self.thick_pal, self.cant_lab,
+        lat1 = BoardPal(self.label + ".lat", self.height - self.thick_pal, self.depth, self.thick_pal, self.cant_lab,
                         "", "", "")
         lat1.rotate("y")
         lat1.move("x", lat1.thick)
@@ -31,7 +32,7 @@ class BaseBox(Corp):
         self.append(lat1)
 
         # lat rotit pe y, translatat pe x cu (jos - grosime), translatat pe z cu grosime jos
-        lat2 = PlacaPal(self.label + ".lat", self.height - self.thick_pal, self.depth, self.thick_pal, self.cant_lab,
+        lat2 = BoardPal(self.label + ".lat", self.height - self.thick_pal, self.depth, self.thick_pal, self.cant_lab,
                         "", "", "")
         lat2.rotate("y")
         lat2.move("x", lat2.thick)
@@ -40,7 +41,7 @@ class BaseBox(Corp):
         self.append(lat2)
 
         # leg translatat pe z cu (lungimea lat + offset lat - grosime leg), si pe x cu grosime lat
-        leg1 = PlacaPal(self.label + ".leg1", self.width - (2 * (self.thick_pal + self.cant)), 100, self.thick_pal,
+        leg1 = BoardPal(self.label + ".leg1", self.width - (2 * (self.thick_pal + self.cant)), 100, self.thick_pal,
                         self.cant_lab, self.cant_lab, "", "")
         leg1.move("z", lat1.length + jos.thick - leg1.thick)
         leg1.move("x", lat1.thick)
@@ -49,7 +50,7 @@ class BaseBox(Corp):
         # leg translatat pe z cu (lungimea lat + offset lat - grosime leg)
         #               pe y cu (latime lat - latime leg)
         #               pe x cu grosime lat
-        leg2 = PlacaPal(self.label + ".leg2", self.width - (2 * (self.thick_pal + self.cant)), 100, self.thick_pal,
+        leg2 = BoardPal(self.label + ".leg2", self.width - (2 * (self.thick_pal + self.cant)), 100, self.thick_pal,
                         self.cant_lab, self.cant_lab, "", "")
         leg2.move("z", lat1.length + jos.thick - leg1.thick)
         leg2.move("y", lat1.width - leg2.width)

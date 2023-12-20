@@ -1,15 +1,17 @@
 # STL exporter
 import os
-from furniture_design.cabinets.elements.placa import Placa
+from furniture_design.cabinets.elements.board import *
 
 
-def export_stl_comanda(Comanda, output_folder):
-    file_name = os.path.join(output_folder, "3D " + Comanda.client)
+def export_stl_order(order, output_folder):
+    file_name = os.path.join(output_folder, "3D " + order.client)
 
-    for cabinet in Comanda.designed_cabinets:
-        for material in cabinet.material_list:
-            if isinstance(material, Placa):
-                i=0
+    offset = 0
+    for cabinet in order.cabinets_list:
+        cabinet.move_corp("x", offset)
+        for material in cabinet.elements_list:
+            if isinstance(material, Board):
+                i = 0
                 export_stl(file_name,
                            material.label + str(i),
                            material.position[0],
@@ -19,6 +21,7 @@ def export_stl_comanda(Comanda, output_folder):
                            material.position[4],
                            material.position[5])
                 i += 1
+        offset += cabinet.width + 1
 
         # cabinet.drawCorp(name, ox + ofset, oy, oz)
         # ofset = ofset + self.corpuri[i].width + 1
@@ -352,17 +355,18 @@ def write_board(file_name, label, x, y, z, ox, oy, oz):
         stl_file.write('endsolid ' + file_name + '\n')
     stl_file.close()
 
-def drawCorp(self, filename, ox, oy, oz):
-    for i in range(len(self.material_list)):
-        if isinstance(self.material_list[i], Placa):
+
+def draw_cabinet(self, filename, ox, oy, oz):
+    for i in range(len(self.elements_list)):
+        if isinstance(self.elements_list[i], Board):
             export_stl(filename,
-                        self.material_list[i].label + str(i),
-                        self.material_list[i].position[0],
-                        self.material_list[i].position[1],
-                        self.material_list[i].position[2],
-                        self.material_list[i].position[3] + ox,
-                        self.material_list[i].position[4] + oy,
-                        self.material_list[i].position[5] + oz)
+                       self.elements_list[i].label + str(i),
+                       self.elements_list[i].position[0],
+                       self.elements_list[i].position[1],
+                       self.elements_list[i].position[2],
+                       self.elements_list[i].position[3] + ox,
+                       self.elements_list[i].position[4] + oy,
+                       self.elements_list[i].position[5] + oz)
 
 
 def draw(self, ox, oy, oz):
@@ -370,7 +374,7 @@ def draw(self, ox, oy, oz):
     name = os.path.join(folder_name, "3D " + self.client)
     if os.path.exists(name+".stl"):
         os.remove(name+".stl")
-    ofset = 0
+    offset = 0
     for i in range(len(self.corpuri)):
-        self.corpuri[i].drawCorp(name, ox + ofset, oy, oz)
-        ofset = ofset + self.corpuri[i].width + 1
+        self.corpuri[i].draw_cabinet(name, ox + offset, oy, oz)
+        offset = offset + self.corpuri[i].width + 1

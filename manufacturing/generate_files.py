@@ -1,11 +1,15 @@
 import os
 from manufacturing.export_for_proficut import export_pal_for_proficut
+from manufacturing.export_for_proficut import export_pfl_for_proficut
+from manufacturing.export_for_nettfront import export_front_for_nettfront
 from manufacturing.export_csv import export_csv
-from manufacturing.export_stl import export_stl_comanda
+from manufacturing.export_stl import export_stl_order
+from manufacturing.generate_offer_cost import export_cost_sheet, print_order_summary, generate_offer_file
+# TODO implement price handler: Cost sheet implemented, Cost Summary still not done
 
 
-def generate_manufacturing_files(comanda, output_path):
-    '''
+def generate_manufacturing_files(order, output_path):
+    """
     generate_manufacturing_files is a function that takes a cabinet object and an output_path as arguments.
     The function creates the output directory if it doesn't exist.
     It generates a summary file (design_summary.txt) containing information about the cabinet's dimensions, materials,
@@ -14,24 +18,19 @@ def generate_manufacturing_files(comanda, output_path):
     the type of cabinet.
     Adjust the code according to the specific manufacturing files you need for your project and the structure of your
     cabinet classes.
-    '''
+    """
 
     # Create the output directory if it doesn't exist
     os.makedirs(output_path, exist_ok=True)
 
-    # Generate a summary file
-    # summary_file_path = os.path.join(output_path, "design_summary.txt")
-    # with open(summary_file_path, 'w') as summary_file:
-    #     summary_file.write("Manufacturing Summary:\n")
-    #     summary_file.write(f"Dimensions: {cabinet.dimensions}\n")
-    #     summary_file.write(f"Materials: {cabinet.materials}\n")
-    #     summary_file.write(f"Hardware: {cabinet.hardware}\n")
-    #     summary_file.write(f"Additional Features: {', '.join(cabinet.additional_features)}\n")
+    export_pal_for_proficut(order, output_path)
+    export_pfl_for_proficut(order, output_path)
+    export_front_for_nettfront(order, output_path)
+    export_csv(order, output_path)
+    export_stl_order(order, output_path)
+    export_cost_sheet(order, output_path)
+    print_order_summary(order)
+    generate_offer_file(order, output_path)
 
-    # You can add more logic here to generate additional manufacturing files based on cabinet type
-    # For example, cutting diagrams, assembly instructions, etc.
-    export_pal_for_proficut(comanda, output_path)
-    export_csv(comanda, output_path)
-    export_stl_comanda(comanda, output_path)
     print(f"Manufacturing files generated in: {output_path}")
 

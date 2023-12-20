@@ -1,6 +1,6 @@
 import math
 
-from furniture_design.cabinets import corp, accesoriu, PlacaPal
+from furniture_design.cabinets import cabinet, accesoriu, PlacaPal
 
 
 class TowerBox(corp):

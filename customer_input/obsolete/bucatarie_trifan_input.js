@@ -1,5 +1,5 @@
 {
-    "client": "Eligia Andreica",
+    "client": "Alex Trifan",
     "Client Proficut": "Bogdan Urs",
     "Tel Proficut": "0740472185",
     "Transport": "Da",
@@ -21,32 +21,20 @@
     "material_blat": "Stejar Alpin Keindl",
     "material_pfl": "Alb",
     "h_rate": 120,
-    "discount": 0,
+    "discount": 100,
     "nr_electrocasnice": 6,
 
     "cabinets": [
       {
-        "cabinet_type": "TowerBox",
-        "label": "T1",
+        "cabinet_type": "SinkBox",
+        "label": "j1",
         "height": 650,
         "width": 1000,
         "depth": 600,
         "additional_features":
-        {
-          "front": {
-            "split_list": [
-              [
-                100,
-                50
-              ],
-              [
-                100,
-                50
-              ]
-            ],
-            "front_type": "door"
-          }
-        },
+        [
+          {"feature": "front", "split_list": [[100, 50], [100, 50]], "front_type": "door"}
+        ],
         "positioning":
         {
           "move": [["x", 1000],["y", 1000]],

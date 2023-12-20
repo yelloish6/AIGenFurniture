@@ -3,7 +3,6 @@ import json
 # from furniture_design.cabinets.kitchen_cabinet import KitchenCabinet  # Import specific cabinet type
 from furniture_design.design_engine import design_furniture
 from manufacturing.generate_files import generate_manufacturing_files
-
 ''' 
 Loads customer input data from JSON files in the customer_input directory.
 Uses the design_furniture function from the design_engine module to create an order based on customer input.
@@ -12,9 +11,11 @@ Generates manufacturing files using the generate_manufacturing_files function fr
 Saves the manufacturing files in the customer's output directory within the output folder.
 '''
 
+
 def load_customer_input(input_file):
     with open(input_file, 'r') as file:
         return json.load(file)
+
 
 def main():
     # Assuming your input files are in the customer_input directory
@@ -30,16 +31,17 @@ def main():
             customer_data = load_customer_input(input_path)
 
             # Design the furniture based on customer input
-            comanda = design_furniture(customer_data)
+            order = design_furniture(customer_data)
 
             # Display complete order
-            comanda.print_comanda()
+            # order.print()
 
             # Generate manufacturing files and save to customer's output directory
             customer_output_directory = os.path.join(output_directory, input_file.replace(".json", "_output"))
             os.makedirs(customer_output_directory, exist_ok=True)
 
-            generate_manufacturing_files(comanda, customer_output_directory)
+            generate_manufacturing_files(order, customer_output_directory)
+
 
 if __name__ == "__main__":
     main()
