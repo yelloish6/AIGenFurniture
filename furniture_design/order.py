@@ -1,8 +1,5 @@
 import os
-import csv
-import math
-#import openpyxl
-import shutil
+from furniture_design.cabinets.elements.board import *
 
 PAL_LOSS = 0.1  # used to calculate number of sheets needed
 
@@ -96,3 +93,14 @@ class Order:
             self.corpuri[i].draw_cabinet(name, ox + ofset, oy, oz)
             ofset = ofset + self.corpuri[i].width + 1
 
+    def get_boards_number(self):
+        """
+        this method returns the amount of elements that inheit the Board class in an order
+        :return: nr. of elements that are subclass of Board in order
+        """
+        boards_counter = 0
+        for cabinet in self.cabinets_list:
+            for element in cabinet.elements_list:
+                if isinstance(element, Board):
+                    boards_counter += 1
+        return boards_counter

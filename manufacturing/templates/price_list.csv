@@ -5,16 +5,19 @@ pal,Roz Fuchsia U337 ST9,514,sheet,0.5,514,proficut,Pal Roz Fuchsia  U337 ST9
 pal,Roz Flamingo U363 ST9,514,sheet,1,514,proficut,Pal Roz Flamingo  U363 ST9
 pal,Stejar Halifax H1176 ST37,777,sheet,1,777,proficut,Stejar Halifax H1176 ST37
 blat,Stejar Bardolino Natur,320,m,2,319.6578,Holver,"K5577 DP - CER NEGRU DESCHIS 48,78 EUR + TVA => "
-blat,Stejar Halifax 600,347,m,4,347,proficut,Stejar Halifax Alb H1176 ST37
+blat,Stejar Halifax 600,347,m,4,382,proficut,Stejar Halifax Alb H1176 ST37 (1377RON/4m) + 35 RON/m aplicare cant
 blat,Stejar Halifax 920,634.25,m,4,634.25,proficut,Stejar Halifax Alb H1176 ST37
 blat,Stejar Alpin Keindl,138.75,m,2,138.75,,
 pfl,Alb,115,sheet,0.5,115,proficut,HDF ALB 100RON + debitare 15RON
 front,A75P AquaBlue Ultramat,493,m2,1,493,protege parol,414RON + TVA => 493 RON/m2
 front,A34R3,309.4,m2,1,309.4,nett front,
 front,Alb W962ST2,55,m2,0.5,55,proficut,
+front,Alb Riflat A356R3,637,m2,1,637,nett front,107 EUR + TVA
+front,Alb Riflat Global Design,975.8,m2,1,975,global design,164 EUR + TVA
 cant,0.4,3.57,m,,3.57,proficut,ABS0422A
 cant,2,7.36,m,,7.36,proficut,ABS222A
 service,decupare pal,29.75,piece,1,29.75,proficut,DECUPARE PAL SCHITA
+accessory,decupare blat,100,piece,1,100,proficut,DECUPARE BLAT SCHITA
 service,transport,131,piece,1,131,proficut,Cheltuieli Transport
 accessory,surub,0.1717,piece,100,0.1717,regency company,https://regencycompany.ro/elemente-imbinare/eurosurub-imbinare-pal-tip-ericsson-7x50-mm.html
 accessory,eurosurub 7x50,0.1717,piece,100,0.1717,regency company,https://regencycompany.ro/elemente-imbinare/eurosurub-imbinare-pal-tip-ericsson-7x50-mm.html

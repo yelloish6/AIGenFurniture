@@ -105,6 +105,7 @@ class Board:
                 return 0
 
     def get_unit_for_item(self, type, material):
+    # TODO wrong implementation of unit management. To be corrected
         """
         this method searches the price_list.csv file for a matching accessory name and returns the matching price.
         :return: price of the accessory
@@ -131,6 +132,8 @@ class Board:
         unit = self.get_unit_for_item(self.type, self.material)
         if unit == "m2":
             return int(board_size * price)
+        elif unit == "m":
+            return int(self.length / 1000 * price)
         elif unit == "sheet":
             return int(price / ((DEFAULT_SHEET_LENGTH * DEFAULT_SHEET_WIDTH / 1000000) * (1 - DEFAULT_LOSS)) * board_size)
 
@@ -202,4 +205,3 @@ class Blat(Board):
         super().__init__(label, length, width, thick)
         self.type = "blat"
         self.material = ""
-

@@ -5,7 +5,7 @@ import math
 PAL_LOSS = 0.1
 SHEET_HEIGHT = 2800
 SHEET_WIDTH = 2070
-
+IMPOZIT = 0.1
 
 def generate_offer_file(order, output_path):
     # TODO implement offer file generation in .pdf
@@ -34,25 +34,30 @@ def export_cost_sheet(order, output_folder):
                 if element.type == "pal":  # TODO this IF statement can be shorter. All cases do mostly the same thing.
                     material = element.material
                     size = element.get_m2()
+                    unit = element.get_unit_for_item(element.type, element.material)
                 elif element.type == "front":
                     material = element.material
                     size = element.get_m2()
+                    unit = element.get_unit_for_item(element.type, element.material)
                 elif element.type == "pfl":
                     material = element.material
                     size = element.get_m2()
+                    unit = element.get_unit_for_item(element.type, element.material)
                 elif element.type == "blat":
                     material = element.material
                     size = element.get_m2()
+                    unit = element.get_unit_for_item(element.type, element.material)
                 elif element.type == "accessory":
                     material = element.label
                     size = element.pieces
+                    unit = "pieces"
                 # cant1_size = element.get_m_cant("0.4")
                 # cant2_size = element.get_m_cant("2")
                 price = element.get_price()
                 # cant1_price = get_price_for_item("cant", "0.4")
                 # cant2_price = get_price_for_item("cant", "2")
 
-                cost_writer.writerow([element.type, element.label, size, "m2", material, price])
+                cost_writer.writerow([element.type, element.label, size, unit, material, price])
                 # cost_writer.writerow(["cant", element.label, cant1_size, "m", "cant 0.4",
                 #                      cant1_price, float(cant1_size) * float(cant1_price)])
                 # cost_writer.writerow(["cant", element.label, cant1_size, "m", "cant 2",
@@ -213,7 +218,7 @@ def get_m_blat(order):
         for element in cabinet.elements_list:
             if element.type == "blat":
                 m = m + element.length
-    return int(m / 1000)
+    return float(m / 1000)
 
 
 def get_order_length(order):
@@ -252,6 +257,7 @@ def get_sheets_pfl(order):
         return sheets
 
 
+#TODO handle decupare blat as service not as accessory
 def get_cost_pal(order):
     pal_price = get_price_for_item("pal", order.mat_pal) * get_sheets_pal(order)
     return pal_price
@@ -279,19 +285,37 @@ def get_cost_accessories(order):
     return int(cost_acc)
 
 
+# def get_cost_manopera_old(order):
+#     """
+#     - 8h proictare
+#     - 2h per corp asamblare, pozitionare si montaj fronturi
+#     - 2h montaj / electrocasnic
+#     - 0.5h pe metru de blat, montaj blat
+#     :return: [pret manopera, pret manopera cu discount]
+#     """
+#
+#     discount = order.discount
+#     h_rate = order.h_rate
+#     electrocasnice = order.nr_electrocasnice
+#     pret_manop = math.ceil((8 + (len(order.cabinets_list) * 2) + electrocasnice * 2 + get_m_blat(order) * 0.5)) * h_rate
+#     pret_manop_discount = pret_manop * (100 - discount) / 100
+#     return [pret_manop, pret_manop_discount]
+
+
 def get_cost_manopera(order):
     """
-    - 8h proictare
-    - 2h per corp asamblare, pozitionare si montaj fronturi
+    - 8h proiectare
+    - 10 min/placa (pal, front,pfl) (0.17h/placa)
     - 2h montaj / electrocasnic
-    - 0.5h pe metru de blat, montaj blat
-    :return: [pret manopera, pret manopera cu discount]
+    - 30 min. pe metru de blat (0.5h/m)
+    :param order:
+    :return:
     """
-
     discount = order.discount
     h_rate = order.h_rate
     electrocasnice = order.nr_electrocasnice
-    pret_manop = math.ceil((8 + (len(order.cabinets_list) * 2) + electrocasnice * 2 + get_m_blat(order) * 0.5)) * h_rate
+    boards = order.get_boards_number()
+    pret_manop = math.ceil((8 + (boards * 0.17) + electrocasnice * 2 + get_m_blat(order) * 0.5) * h_rate*(1 + IMPOZIT))
     pret_manop_discount = pret_manop * (100 - discount) / 100
     return [pret_manop, pret_manop_discount]
 

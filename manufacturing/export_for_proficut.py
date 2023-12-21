@@ -24,6 +24,7 @@ def export_pal_for_proficut(order, output_folder):
                 sheet['B' + str(10 + counter)] = element.length
                 sheet['C' + str(10 + counter)] = element.width
                 sheet['D' + str(10 + counter)] = 0
+                sheet['E' + str(10 + counter)] = element.label
                 if element.cant_list[0] == 0.4:
                     sheet['F' + str(10 + counter)] = 1
                 else:

@@ -29,7 +29,7 @@ class Accessory:
             for row in price_reader:
                 if row["Item"] == self.type and row["Material"] == self.label:
                     found = True
-                    return float(row["Price"])
+                    return float(row["Price"]) * self.pieces
             if not found:
                 print("ERROR: Price for " + self.type + ":" + self.label + " not found. Setting to 0 RON.")
                 return 0
