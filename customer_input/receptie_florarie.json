@@ -188,9 +188,9 @@
       {
         "label": "dummy",
         "cabinet_type": "Cabinet",
-        "height": 0,
-        "width": 0,
-        "depth": 0,
+        "height": 1,
+        "width": 1,
+        "depth": 1,
         "additional_elements": [
           {"element": "Blat", "label": "Blat1", "length": 3750, "width": 500, "thick": 40},
           {"element": "Blat", "label": "Blat2", "length": 3000, "width": 600, "thick": 40},

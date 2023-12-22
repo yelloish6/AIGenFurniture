@@ -48,7 +48,7 @@ class Cabinet(DrawersMixin, ShelvesMixin):
         self.sep_max_depth = depth - self.cant
         self.sep_prev = ""
         # self.arch = []  # matricea de arhitectura care contine elementele corpului orientate si cu offset
-        self.position = [0, 0, 0, 0, 0, 0]
+        # self.position = [0, 0, 0, 0, 0, 0]
         self.cant_length = [['0.4', 0], ['2', 0]]
 
     def append(self, obj):

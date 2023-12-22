@@ -5,7 +5,7 @@ from manufacturing.export_for_nettfront import export_front_for_nettfront
 from manufacturing.export_csv import export_csv
 from manufacturing.export_stl import export_stl_order
 from manufacturing.generate_offer_cost import export_cost_sheet, print_order_summary, generate_offer_file
-# TODO implement price handler: Cost sheet implemented, Cost Summary still not done
+from manufacturing.generate_assembly_file import generate_assembly_file
 
 
 def generate_manufacturing_files(order, output_path):
@@ -31,6 +31,7 @@ def generate_manufacturing_files(order, output_path):
     export_cost_sheet(order, output_path)
     print_order_summary(order)
     generate_offer_file(order, output_path)
+    generate_assembly_file(order, output_path)
 
     print(f"Manufacturing files generated in: {output_path}")
 

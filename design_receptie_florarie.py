@@ -213,7 +213,7 @@ c1.remove_element("blat", "C1.blat")
 c1.remove_all_pfl()
 order.append(c1)
 
-cc = Cabinet("dummy", 0, 0, 0, rules)
+cc = Cabinet("dummy", 1, 1, 1, rules)
 
 blat1 = Blat("blat1", 500, 500, 40)
 cc.append(blat1)

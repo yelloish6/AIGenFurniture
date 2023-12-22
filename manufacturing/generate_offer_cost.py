@@ -1,13 +1,23 @@
 import os
 import csv
 import math
+# import fitz
 
 PAL_LOSS = 0.1
 SHEET_HEIGHT = 2800
 SHEET_WIDTH = 2070
 IMPOZIT = 0.1
 
+
 def generate_offer_file(order, output_path):
+    # doc = fitz.open()
+    # page = doc.new_page()
+    # shape = page.new_shape()
+    # shape.draw_rect([1, 1, 594, 841]) # the size of one page
+    # shape.draw_line(fitz.Point(4, 4),  fitz.Point(40, 40))
+    # shape.finish(color=(0, 0, 0), width=1)
+    # shape.commit()
+    # doc.save(output_path + '/offer.pdf')
     # TODO implement offer file generation in .pdf
     print(f"Generating offer file in {output_path} to be implemented")
 

@@ -42,9 +42,8 @@
           {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1300, "offset_x": 0}
         ],
         "positioning": [
-          {"move": ["x", 1000]},
-          {"move": ["y", 400]},
-          {"rotate": "x"}
+          {"move": ["x", 0]},
+          {"move": ["y", 0]}
         ]
       }
     ]
