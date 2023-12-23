@@ -44,10 +44,10 @@ class Board:
     def rotate(self, axis):
         """
         rotate the plank by 90 deg on the specified axis. dimensions are re-set to match the rotated position
-        :param axis: axis to rotate around
+        :param axis: axis to rotate around ("x"/"y"/"z")
         :return: n/a
         """
-        # axis = "x"/"y"/"z"
+
         init_x = self.position[0]
         init_y = self.position[1]
         init_z = self.position[2]

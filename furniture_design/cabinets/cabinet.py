@@ -35,6 +35,7 @@ class Cabinet(DrawersMixin, ShelvesMixin):
         self.cant_pol = rules["cant_pol"]
         self.cant_separator = rules["cant_separator"]
         self.elements_list = []
+        self.position_list = [] # list of movements for the cabinet to position it in the order
         # self.pal = []
         # self.palOO = []
         # self.pfl = []
@@ -48,7 +49,6 @@ class Cabinet(DrawersMixin, ShelvesMixin):
         self.sep_max_depth = depth - self.cant
         self.sep_prev = ""
         # self.arch = []  # matricea de arhitectura care contine elementele corpului orientate si cu offset
-        # self.position = [0, 0, 0, 0, 0, 0]
         self.cant_length = [['0.4', 0], ['2', 0]]
 
     def append(self, obj):
@@ -214,29 +214,31 @@ class Cabinet(DrawersMixin, ShelvesMixin):
         return m
 
     def rotate_corp(self, axis):
-        for i in range(len(self.elements_list)):
-            if isinstance(self.elements_list[i], Board):
-                self.elements_list[i].rotate(axis)
-                initial_position = self.elements_list[i].__getattribute__("position")
-                final_position = initial_position
-                offset_x = initial_position[3]
-                offset_y = initial_position[4]
-                offset_z = initial_position[5]
-                if axis == "x":
-                    final_position[3] = offset_x
-                    final_position[4] = -offset_z
-                    final_position[5] = offset_y
-                elif axis == "y":
-                    final_position[3] = -offset_z
-                    final_position[4] = offset_y
-                    final_position[5] = offset_x
-                elif axis == "z":
-                    final_position[3] = offset_y
-                    final_position[4] = -offset_x
-                    final_position[5] = offset_z
-                self.elements_list[i].position = final_position
+        self.position_list.append(["rotate", axis])
+        # for i in range(len(self.elements_list)):
+        #     if isinstance(self.elements_list[i], Board):
+        #         self.elements_list[i].rotate(axis)
+        #         initial_position = self.elements_list[i].position
+        #         final_position = initial_position
+        #         offset_x = initial_position[3]
+        #         offset_y = initial_position[4]
+        #         offset_z = initial_position[5]
+        #         if axis == "x":
+        #             final_position[3] = offset_x
+        #             final_position[4] = -offset_z
+        #             final_position[5] = offset_y
+        #         elif axis == "y":
+        #             final_position[3] = -offset_z
+        #             final_position[4] = offset_y
+        #             final_position[5] = offset_x
+        #         elif axis == "z":
+        #             final_position[3] = offset_y
+        #             final_position[4] = -offset_x
+        #             final_position[5] = offset_z
+        #         self.elements_list[i].position = final_position
 
     def move_corp(self, axis, offset):
-        for i in range(len(self.elements_list)):
-            if isinstance(self.elements_list[i], Board):
-                self.elements_list[i].move(axis, offset)
+        self.position_list.append(["move", axis, offset])
+        # for i in range(len(self.elements_list)):
+        #     if isinstance(self.elements_list[i], Board):
+        #         self.elements_list[i].move(axis, offset)

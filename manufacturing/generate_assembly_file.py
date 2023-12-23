@@ -64,9 +64,9 @@ def generate_assembly_file(order, output_path):
                 # shape.finish(color=(0, 0, 0), fill=(1, 1, 1), width=1, fill_opacity=0.5)
                 shape.insert_text(p6_2, label)
                 # shape.insert_text(label)
-                print(label, pos)
-        shape.draw_rect([1, 1, 594, 841]) # the size of one page
+                # print(label, pos)
+        # shape.draw_rect([1, 1, 594, 841]) # the size of one page
         # shape.draw_rect([50, 50, 550, 750]) # rectangle around the drawing
-        shape.finish(color=(0, 0, 0), fill=(1, 1, 1), width=1, fill_opacity=1)
+        shape.finish(color=(0, 0, 0), fill=(0.5, 0.2, 0.3), width=1, fill_opacity=1)
         shape.commit()
     doc.save(output_path + '/Assembly_file.pdf')
