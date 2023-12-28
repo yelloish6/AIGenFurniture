@@ -14,11 +14,9 @@ def export_stl_order(order, output_folder):
     offset = 0
     order_mesh = None
     for cabinet in order.cabinets_list:
-        print(cabinet.label)
         cabinet_mesh = None
         for element in cabinet.elements_list:
             if isinstance(element, Board):
-                print(element.label)
                 board_mesh = generate_mesh_for_board(element)
                 position_mesh(board_mesh, element.position_list)
                 if not cabinet_mesh:
@@ -63,9 +61,7 @@ def export_stl_order(order, output_folder):
                     order_mesh = board_mesh
                 else:
                     order_mesh = mesh.Mesh(numpy.concatenate([order_mesh.data, board_mesh.data]))
-                print(element.label, element.position_list)
         offset += cabinet_to_print.width + 1
-        print(cabinet.label, cabinet.position_list)
     order_mesh.save(str(file_name) + ".stl")
 
 

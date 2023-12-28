@@ -118,10 +118,20 @@ class BaseCorner(Cabinet):
         if l_r == "left":
             jos = BoardPal(self.label + ".jos", self.width, self.depth, self.thick_pal, "", "", "", "")
             jos.add_obs("decupaj colt stanga. Cote in sensul acelor de ceasornic, de la coltul din stanga spate: " +
-                        str(self.width) + ":" + str(self.depth - cut_depth) + ":" + str(cut_width) + "(cant " + str(
-                self.cant_lab) + "):" + str(cut_depth) +
-                        "(cant " + str(self.cant_lab) + "):" + str(self.width - cut_width) + ":" + str(self.depth))
-            # jos.move("y", - depth)
+                        str(self.width) + ":" + # cota1
+                        str(self.depth - cut_depth) + ":" + # cota2
+                        str(cut_width) + "(cant " + str(self.cant_lab) + "):" + # cota3
+                        str(cut_depth) + "(cant " + str(self.cant_lab) + "):" + # cota4
+                        str(self.width - cut_width) + ":" + # cota5
+                        str(self.depth)) # cota6
+            jos.cut_coords = [
+                [0, 0],
+                [self.width - cut_width, 0],
+                [self.width - cut_width, cut_depth],
+                [self.width, cut_depth],
+                [self.width, self.depth],
+                [0, self.depth]
+            ]
             self.append(jos)
             # self.append(Accessory("decupare pal", 1))
 
@@ -201,7 +211,14 @@ class BaseCorner(Cabinet):
                             str(cut_depth - self.thick_pal + 20) + "(cant " + str(self.cant_lab) + "):" +
                             str(self.width - cut_width - self.thick_pal - 20) + ":" +
                             str(self.depth - self.thick_pal))
-
+                pol.cut_coords = [
+                    [0, 0],
+                    [self.width - cut_width - self.thick_pal - 20, 0],
+                    [self.width - cut_width - self.thick_pal - 20, cut_depth - self.thick_pal + 20],
+                    [self.width - (2 * self.thick_pal), cut_depth - self.thick_pal + 20],
+                    [self.width - (2 * self.thick_pal), self.depth - self.thick_pal],
+                    [0, self.depth - self.thick_pal]
+                ]
                 pol.move("x", self.thick_pal)
                 pol.move("y", self.thick_pal)
                 pol.move("z", int((self.height - self.thick_pal) / 2))
@@ -237,10 +254,20 @@ class BaseCorner(Cabinet):
             jos = BoardPal(self.label + ".jos", self.width, self.depth, self.thick_pal, "", "", "", "")
             jos.add_obs(
                 str("decupaj colt dreapta. Cote in sensul acelor de ceasornic, de la coltul din stanga spate: " +
-                    str(self.width) + ":" + str(self.depth) + ":" + str(self.width - cut_width) + ":" + str(
-                    cut_depth) + "(cant " + str(self.cant_lab) + "):" +
-                    str(cut_width) + "(cant " + str(self.cant_lab) + "):" + str(self.depth - cut_depth)))
-            # jos.move("y", -cut_depth)
+                    str(self.width) + ":" + # cota1
+                    str(self.depth) + ":" + # cota2
+                    str(self.width - cut_width) + ":" + # cota3
+                    str(cut_depth) + "(cant " + str(self.cant_lab) + "):" + # cota4
+                    str(cut_width) + "(cant " + str(self.cant_lab) + "):" + # cota5
+                    str(self.depth - cut_depth))) # cota6
+            jos.cut_coords = [
+                [0, cut_depth],
+                [cut_width, cut_depth],
+                [cut_width, 0],
+                [self.width, 0],
+                [self.width, self.depth],
+                [0, self.depth]
+            ]
             self.append(jos)
             # self.append(Accessory("decupare pal", 1))
 
@@ -314,7 +341,14 @@ class BaseCorner(Cabinet):
                     str(cut_depth - self.thick_pal + 20) + "(cant " + str(self.cant_lab) + "):" +
                     str(cut_width - self.thick_pal + 20) + "(cant " + str(self.cant_lab) + "):" +
                     str(self.depth - cut_depth - 20) + ":")
-
+                pol.cut_coords = [
+                    [0, cut_depth - self.thick_pal + 20],
+                    [cut_width - self.thick_pal + 20, cut_depth - self.thick_pal + 20],
+                    [cut_width - self.thick_pal + 20, 0],
+                    [self.width - (2 * self.thick_pal), 0],
+                    [self.width - (2 * self.thick_pal), self.depth - self.thick_pal],
+                    [0, self.depth - self.thick_pal]
+                ]
                 pol.move("x", self.thick_pal)
                 pol.move("y", self.thick_pal)
                 pol.move("z", int((self.height - self.thick_pal) / 2))
@@ -407,12 +441,20 @@ class TopCorner(Cabinet):
                            self.thick_pal,
                            "", "", "", "")
             jos.add_obs("decupaj colt stanga. Cote in sensul acelor de ceasornic, de la coltul din stanga spate: " +
-                        str(self.width - 2 * self.thick_pal) + ":" +
-                        str(self.depth - cut_depth) + ":" +
-                        str(cut_width - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
-                        str(cut_depth - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
-                        str(self.width - cut_width) + ":" +
-                        str(self.depth - self.thick_pal))
+                        str(self.width - 2 * self.thick_pal) + ":" + #cota1
+                        str(self.depth - cut_depth) + ":" + # cota2
+                        str(cut_width - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" + # cota3
+                        str(cut_depth - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" + # cota4
+                        str(self.width - cut_width - self.thick_pal) + ":" + # cota5
+                        str(self.depth - self.thick_pal)) # cota6
+            jos.cut_coords = [
+                [0, 0],
+                [self.width - cut_width - self.thick_pal, 0],
+                [self.width - cut_width - self.thick_pal, cut_depth - self.thick_pal],
+                [self.width - 2 * self.thick_pal, cut_depth - self.thick_pal],
+                [self.width - 2 * self.thick_pal, self.depth - self.thick_pal],
+                [0, self.depth - self.thick_pal]
+            ]
             jos.move("y", self.thick_pal)
             jos.move("x", self.thick_pal)
             # jos.move("y", -cut_depth)
@@ -428,8 +470,16 @@ class TopCorner(Cabinet):
                         str(self.depth - cut_depth) + ":" +
                         str(cut_width - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
                         str(cut_depth - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
-                        str(self.width - cut_width) + ":" +
+                        str(self.width - cut_width - self.thick_pal) + ":" +
                         str(self.depth - self.thick_pal))
+            sus.cut_coords = [
+                [0, 0],
+                [self.width - cut_width - self.thick_pal, 0],
+                [self.width - cut_width - self.thick_pal, cut_depth - self.thick_pal],
+                [self.width - 2 * self.thick_pal, cut_depth - self.thick_pal],
+                [self.width - 2 * self.thick_pal, self.depth - self.thick_pal],
+                [0, self.depth - self.thick_pal]
+            ]
             sus.move("y", self.thick_pal)
             sus.move("x", self.thick_pal)
             sus.move("z", self.height - self.thick_pal)
@@ -437,7 +487,7 @@ class TopCorner(Cabinet):
             self.append(sus)
             # # self.append(Accessory("decupare pal", 1))
 
-            for polita in range(polite):
+            for i in range(polite):
                 pol = BoardPal(self.label + ".pol", self.width - (2 * self.thick_pal),
                                self.depth - (1 * self.thick_pal),
                                self.thick_pal, "", "", "", "")
@@ -448,9 +498,17 @@ class TopCorner(Cabinet):
                             str(cut_depth - self.thick_pal + 20) + "(cant " + str(self.cant_lab) + "):" +
                             str(self.width - cut_width - self.thick_pal - 20) + ":" +
                             str(self.depth - self.thick_pal))
+                pol.cut_coords = [
+                    [0, 0],
+                    [self.width - cut_width - self.thick_pal - 20, 0],
+                    [self.width - cut_width - self.thick_pal - 20, cut_depth - self.thick_pal + 20],
+                    [self.width - 2 * self.thick_pal, cut_depth - self.thick_pal + 20],
+                    [self.width - 2 * self.thick_pal, self.depth - self.thick_pal],
+                    [0, self.depth - self.thick_pal]
+                ]
                 pol.move("x", self.thick_pal)
                 pol.move("y", self.thick_pal)
-                pol.move("z", polita * int((self.height - self.thick_pal) / polite))
+                pol.move("z", (i + 1) * int((self.height - self.thick_pal) / (polite + 1)))
                 # pol.move("y", -cut_depth)
                 self.append(pol)
                 # # self.append(Accessory("decupare pal", 1))
@@ -507,12 +565,19 @@ class TopCorner(Cabinet):
                            self.thick_pal,
                            "", "", "", "")
             jos.add_obs("decupaj colt dreapta. Cote in sensul acelor de ceasornic, de la coltul din stanga spate: " +
-                        str(self.width - (2 * self.thick_pal)) + ":" +
-                        str(self.depth - self.thick_pal) + ":" +
-                        str(self.width - cut_width - self.thick_pal) + ":" +
-                        str(cut_depth - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
-                        str(cut_width - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
-                        str(self.depth - cut_depth) + ":")
+                        str(self.width - (2 * self.thick_pal)) + ":" + # cota1
+                        str(self.depth - self.thick_pal) + ":" + # cota2
+                        str(self.width - cut_width - self.thick_pal) + ":" + # cota3
+                        str(cut_depth - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" + # cota4
+                        str(cut_width - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" + # cota5
+                        str(self.depth - cut_depth) + ":") # cota6
+            jos.cut_coords = [[0, cut_depth - self.thick_pal],
+                              [cut_width - self.thick_pal, cut_depth - self.thick_pal],
+                              [cut_width - self.thick_pal, 0],
+                              [self.width - (2 * self.thick_pal), 0],
+                              [self.width - (2 * self.thick_pal), self.depth - self.thick_pal],
+                              [0, self.depth - self.thick_pal]
+                              ]
             jos.move("y", self.thick_pal)
             # jos.move("y", -cut_depth)
             jos.move("x", self.thick_pal)
@@ -530,7 +595,13 @@ class TopCorner(Cabinet):
                         str(cut_depth - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
                         str(cut_width - self.thick_pal) + "(cant " + str(self.cant_lab) + "):" +
                         str(self.depth - cut_depth) + ":")
-
+            sus.cut_coords = [[0, cut_depth - self.thick_pal],
+                              [cut_width - self.thick_pal, cut_depth - self.thick_pal],
+                              [cut_width - self.thick_pal, 0],
+                              [self.width - (2 * self.thick_pal), 0],
+                              [self.width - (2 * self.thick_pal), self.depth - self.thick_pal],
+                              [0, self.depth - self.thick_pal]
+                              ]
             sus.move("y", self.thick_pal)
             sus.move("z", self.height - self.thick_pal)
             # sus.move("y", -cut_depth)
@@ -550,9 +621,16 @@ class TopCorner(Cabinet):
                     str(cut_depth - self.thick_pal + 20) + "(cant " + str(self.cant_lab) + "):" +
                     str(cut_width - self.thick_pal + 20) + "(cant " + str(self.cant_lab) + "):" +
                     str(self.depth - cut_depth - 20) + ":")
+                pol.cut_coords = [[0, cut_depth - self.thick_pal + 20],
+                                  [cut_width - self.thick_pal + 20, cut_depth - self.thick_pal + 20],
+                                  [cut_width - self.thick_pal + 20, 0],
+                                  [self.width - (2 * self.thick_pal), 0],
+                                  [self.width - (2 * self.thick_pal), self.depth - self.thick_pal],
+                                  [0, self.depth - self.thick_pal]
+                                  ]
                 pol.move("x", self.thick_pal)
                 pol.move("y", self.thick_pal)
-                pol.move("z", i * int((self.height - self.thick_pal) / polite))
+                pol.move("z", (i + 1) * int((self.height - self.thick_pal) / (polite + 1)))
                 # pol.move("y", -cut_depth)
                 self.append(pol)
                 # self.append(Accessory("decupare pal", 1))
@@ -931,7 +1009,7 @@ class MsVBox(Cabinet):
 
 
 class BaseCornerShelf(Cabinet):
-    def __init__(self, label, height, width, depth, shelves, rules):
+    def __init__(self, label, height, width, depth, shelves, rules, rounded=False):
         super().__init__(label, height, width, depth, rules)
 
         back1 = BoardPal(self.label + ".back1", self.height, self.width - self.thick_pal, self.thick_pal, 1, 1, 1, 0)
@@ -948,14 +1026,47 @@ class BaseCornerShelf(Cabinet):
         self.append(Accessory("surub", 2))
 
         base = BoardPal(self.label + ".base", self.width - self.thick_pal, self.depth - self.thick_pal, self.thick_pal, 0, 0, 0, 0)
-        base.add_obs("decupaj rotund cu raza de " + str(min(self.width, self.depth) - self.thick_pal))
+        # base.add_obs("decupaj rotund cu raza de " + str(min(self.width, self.depth) - self.thick_pal))
+        # round coordinates:
+        # x = radius * Math.sin(Math.PI * 2 * angle / 360);
+        #
+        # y = radius * Math.cos(Math.PI * 2 * angle / 360);
+        #
+        if rounded:
+            radius = min(self.width, self.depth) - self.thick_pal
+            base.add_obs("decupaj rotund cu raza de " + str(radius))
+            base.cut_coords = [
+                [0, 0],
+                [radius * math.sin(math.radians(15)), radius - (radius * math.cos(math.radians(15)))],
+                [radius * math.sin(math.radians(2 * 15)), radius - (radius * math.cos(math.radians(2 * 15)))],
+                [radius * math.sin(math.radians(3 * 15)), radius - (radius * math.cos(math.radians(3 * 15)))],
+                [radius * math.sin(math.radians(4 * 15)), radius - (radius * math.cos(math.radians(4 * 15)))],
+                [radius * math.sin(math.radians(5 * 15)), radius - (radius * math.cos(math.radians(5 * 15)))],
+                [base.length, radius],
+                [base.length, base.width],
+                [0, base.width]
+            ]
         base.move("x", self.thick_pal)
         self.append(base)
         self.append(Accessory("surub", 4))
 
         for i in range(shelves):
             shelf = BoardPal(self.label + ".shelf", self.width  - self.thick_pal, self.depth  - self.thick_pal, self.thick_pal, 0, 0, 0, 0)
-            shelf.add_obs("decupaj rotund cu raza de " + str(min(self.width, self.depth) - self.thick_pal))
+            if rounded:
+                radius = min(self.width, self.depth) - self.thick_pal
+                shelf.add_obs("decupaj rotund cu raza de " + str(radius))
+                shelf.cut_coords = [
+                    [0, 0],
+                    [radius * math.sin(math.radians(15)), radius - (radius * math.cos(math.radians(15)))],
+                    [radius * math.sin(math.radians(2 * 15)), radius - (radius * math.cos(math.radians(2 * 15)))],
+                    [radius * math.sin(math.radians(3 * 15)), radius - (radius * math.cos(math.radians(3 * 15)))],
+                    [radius * math.sin(math.radians(4 * 15)), radius - (radius * math.cos(math.radians(4 * 15)))],
+                    [radius * math.sin(math.radians(5 * 15)), radius - (radius * math.cos(math.radians(5 * 15)))],
+                    [shelf.length, radius],
+                    [shelf.length, shelf.width],
+                    [0, shelf.width]
+                ]
+            # shelf.add_obs("decupaj rotund cu raza de " + str(min(self.width, self.depth) - self.thick_pal))
             shelf.move("z", ((self.height - ((shelves + 1) * self.thick_pal))/(shelves+1))*(i+1) + self.thick_pal)
             shelf.move("x", self.thick_pal)
             self.append(shelf)

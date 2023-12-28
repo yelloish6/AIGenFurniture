@@ -136,7 +136,7 @@ c6.remove_all_pfl()
 c6.remove_element("blat", "C6.blat")
 order.append(c6)
 
-c5 = BaseCornerShelf("C5", 900 - rules["thick_blat"] - rules["height_legs"], 460, 480, 2, rules)
+c5 = BaseCornerShelf("C5", 900 - rules["thick_blat"] - rules["height_legs"], 460, 480, 2, rules, rounded=True)
 c5.remove_all_pfl()
 c5.rotate_corp("z")
 c5.rotate_corp("z")
