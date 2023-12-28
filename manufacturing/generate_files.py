@@ -3,7 +3,7 @@ from manufacturing.export_for_proficut import export_pal_for_proficut
 from manufacturing.export_for_proficut import export_pfl_for_proficut
 from manufacturing.export_for_nettfront import export_front_for_nettfront
 from manufacturing.export_csv import export_csv
-from manufacturing.export_stl import export_stl_order
+from manufacturing.export_stl_new import export_stl_order
 from manufacturing.generate_offer_cost import export_cost_sheet, print_order_summary, generate_offer_file
 from manufacturing.generate_assembly_file import generate_assembly_file
 

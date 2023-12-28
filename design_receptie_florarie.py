@@ -198,7 +198,7 @@ c2.add_pol(2, 2)
 c2.remove_element("blat", "C2.blat")
 c2.rotate_corp("z")
 c2.rotate_corp("z")
-# c2.move("x", -c1.width - c2.width)
+c2.move_corp("y", -1000)
 order.append(c2)
 
 c1 = SinkBox("C1", 900 - rules["thick_blat"] - rules["height_legs"], 900,530, rules)

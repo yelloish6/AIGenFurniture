@@ -2,6 +2,7 @@
 import os
 from copy import deepcopy
 from furniture_design.cabinets.elements.board import *
+from manufacturing.export_stl_new import export_stl_new
 
 
 def export_stl_order(order, output_folder):

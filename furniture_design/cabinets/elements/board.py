@@ -7,7 +7,7 @@ DEFAULT_LOSS = 0.1
 
 
 class Board:
-    def __init__(self, label, length, width, thick):
+    def __init__(self, label, length, width, thick, cut_coords=None):
         """
         :param label: eticheta
         :param length: lungimea
@@ -29,6 +29,8 @@ class Board:
         self.type = ""  # pal, pfl, front
         self.material = ""
         self.price = 0
+        self.position_list = []
+        self.cut_coords = cut_coords
 
     def add_obs(self, text):
         """
@@ -47,6 +49,7 @@ class Board:
         :param axis: axis to rotate around ("x"/"y"/"z")
         :return: n/a
         """
+        self.position_list.append(["rotate", axis])
 
         init_x = self.position[0]
         init_y = self.position[1]
@@ -75,6 +78,7 @@ class Board:
         :param offset: amount to move by
         :return: n/a
         """
+        self.position_list.append(["move", axis, offset])
         if axis == "x":
             self.position[3] = self.position[3] + int(offset)
         if axis == "y":
