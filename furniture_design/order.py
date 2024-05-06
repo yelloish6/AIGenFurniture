@@ -5,8 +5,51 @@ PAL_LOSS = 0.1  # used to calculate number of sheets needed
 
 
 class Order:
-    def __init__(self, customer_data):
+    def __init__(self,
+                 customer_data
+                 # client="Default",
+                 # client_proficut="Bogdan Urs",
+                 # tel_proficut="0740472185",
+                 # transport="Da",
+                 # address="Str. Borsa, Nr. 38, Mosnita Veche",
+                 # discount=0,
+                 # h_rate=120,
+                 # nr_electrocasnice=0,
+                 # mat_pal="Alb W962ST2",
+                 # mat_pfl="Alb",
+                 # mat_blat="Stejar Halifax 600",
+                 # mat_front="Alb Riflat A356R3"
+                 ):
+        """
 
+        :param customer_data:
+        :param client:
+        :param client_proficut:
+        :param tel_proficut:
+        :param transport:
+        :param address:
+        :param discount:
+        :param h_rate:
+        :param nr_electrocasnice:
+        :param mat_pal:
+        :param mat_pfl:
+        :param mat_blat:
+        :param mat_front:
+        """
+        # if customer_data is None:
+        #     self.client = client
+        #     self.client_proficut = client_proficut
+        #     self.tel_proficut = tel_proficut
+        #     self.transport = transport
+        #     self.address = address
+        #     self.discount = discount
+        #     self.h_rate = h_rate
+        #     self.nr_electrocasnice = nr_electrocasnice
+        #     self.mat_pal = mat_pal
+        #     self.mat_pfl = mat_pfl
+        #     self.mat_blat = mat_blat
+        #     self.mat_front = mat_front
+        # else:
         self.client = customer_data.get("client")
         self.client_proficut = customer_data.get("Client Proficut")
         self.tel_proficut = customer_data.get("Tel Proficut")

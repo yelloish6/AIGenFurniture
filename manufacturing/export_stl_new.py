@@ -149,7 +149,7 @@ def generate_mesh(x, y, z, ox, oy, oz, cut_coords=None):
 
 def generate_mesh_for_board(board):
 
-    # use the lingth width and thick of the board to generate the mesh (to ignore the movements recorded in the postion list)
+    # use the length width and thick of the board to generate the mesh (to ignore the movements recorded in the postion list)
     x = board.length
     y = board.width
     z = board.thick

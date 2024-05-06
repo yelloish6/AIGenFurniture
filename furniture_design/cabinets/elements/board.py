@@ -13,6 +13,7 @@ class Board:
         :param length: lungimea
         :param width: latimea
         :param thick: grosimea
+        :param cut_coords: optional parameter for defining irregular shape boards
         """
 
         self.label = label
@@ -31,6 +32,8 @@ class Board:
         self.price = 0
         self.position_list = []
         self.cut_coords = cut_coords
+
+        self.check_board()
 
     def add_obs(self, text):
         """
@@ -141,14 +144,37 @@ class Board:
         elif unit == "sheet":
             return int(price / ((DEFAULT_SHEET_LENGTH * DEFAULT_SHEET_WIDTH / 1000000) * (1 - DEFAULT_LOSS)) * board_size)
 
+    def check_board(self):
+        """
+        this method checks for issues with how a board is defined and prints ERRORS
+        :return: None
+        """
+        if (self.width or self.length) > 2000:
+            print("ERROR: Potential assembly issue: " + self.label + " Can't be transported and is difficult to handle. "
+                                                                     "Use boards shorter than 2 meters")
+
 
 class BoardPal(Board):
 
     def __init__(self, label, length, width, thick, cant_L1, cant_L2, cant_l1, cant_l2):
         super().__init__(label, length, width, thick)
         self.cant_list = [cant_L1, cant_L2, cant_l1, cant_l2]
+        self.drill_list = [] # diameter, surface, pos_X, pos_Y
         self.type = "pal"
         self.material = ""
+
+        self.check_board()
+
+    def drill(self, surface, x, y, diameter=6):
+        """
+        adds a list of parameters of a hole in the board's drill list
+        :param surface: front, up, down, left, right
+        :param x: the x coordinate of the hole center
+        :param y: the y coordinate of the hole center
+        :param diameter: diameter of the hole in mm
+        :return: none
+        """
+        self.drill_list.append([diameter, surface, int(x), int(y)])
 
     def get_m_cant(self, cant_type):
         """

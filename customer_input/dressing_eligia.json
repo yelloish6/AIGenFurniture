@@ -33,12 +33,12 @@
         "depth": 550,
         "plinta_height": 850,
         "additional_features": [
-          {"feature": "add_sep_h", "width": 664, "offset_x": 0, "offset_z": 850, "sep_cant": 1},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 950, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1150, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1350, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1550, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1750, "offset_x": 0}
+          {"feature": "add_sep_h", "width": 664, "offset_x": 0, "offset_z": 950, "sep_cant": 1},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1150, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1350, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1550, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1750, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1950, "offset": 0}
         ]
       },
       {
@@ -50,12 +50,12 @@
         "plinta_height": 850,
         "additional_features":
         [
-          {"feature": "add_sep_h", "width": 664, "offset_x": 0, "offset_z": 850, "sep_cant": 1},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 950, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1150, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1350, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1550, "offset_x": 0},
-          {"feature": "add_pol_2", "orientation": "h", "width":  664, "offset_z": 1750, "offset_x": 0}
+          {"feature": "add_sep_h", "width": 664, "offset_x": 0, "offset_z": 950, "sep_cant": 1},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1150, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1350, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1550, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1750, "offset": 0},
+          {"feature": "add_pol_2", "orient": "h", "length":  664, "height": 1950, "offset": 0}
         ],
         "positioning": [
           {"move": ["x", 700]}

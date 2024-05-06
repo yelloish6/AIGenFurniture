@@ -50,6 +50,7 @@ rules = {
 }
 
 order = Order(order_data)
+# order = Order()
 
 c9 = BaseBox("C9", 900 - rules["thick_blat"] - rules["height_legs"], 670, 460, rules)
 c9.add_pol(2,2)
