@@ -129,17 +129,18 @@ class ShelvesMixin:
         if offset_z < 90:
             print("ERROR: nu incap sticlele de vin in " + self.label)
 
-    def add_sep_v(self, height, offset_x, offset_z, sep_cant):
+    def add_sep_v(self, height, offset_x, offset_z, sep_cant, cant_gap = 0):
         """
 
         :param height:
         :param offset_x:
         :param offset_z:
         :param sep_cant:
+        :param cant_gap: how much should the board be shorter in depth to compensate for the cant applied
         :return:
         """
         sep_l = height
-        sep_w = self.depth
+        sep_w = self.depth - cant_gap
         sep = BoardPal(self.label + ".sep" + ".v", sep_l, sep_w, self.thick_pal, sep_cant, "", "", "")
         self.append(sep)
         self.sep_space_w = round((self.sep_space_w - self.thick_pal) / 2)
@@ -147,16 +148,19 @@ class ShelvesMixin:
         sep.rotate("y")
         sep.move("x", self.thick_pal + offset_x)
         sep.move("z", self.thick_pal + offset_z)
+        sep.move("y", cant_gap)
         self.append(Accessory("surub", 4))
 
-    def add_sep_h(self, width, offset_x, offset_z, sep_cant):
+
+    def add_sep_h(self, width, offset_x, offset_z, sep_cant, cant_gap = 0):
         sep_l = width
-        sep_w = self.depth
+        sep_w = self.depth - cant_gap
         sep = BoardPal(self.label + ".sep" + ".h", sep_l, sep_w, self.thick_pal, sep_cant, "", "", "")
         self.append(sep)
         self.sep_space_w = round((self.sep_space_w - self.thick_pal) / 2)
 
         sep.move("x", self.thick_pal + offset_x)
         sep.move("z", self.thick_pal + offset_z)
+        sep.move("y", cant_gap)
         self.append(Accessory("surub", 4))
 

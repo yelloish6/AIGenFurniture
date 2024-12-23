@@ -816,6 +816,7 @@ class TopBox(Cabinet):
         jos = BoardPal(self.label + ".jos", self.width - (2 * self.thick_pal), self.depth - (self.cant),
                        self.thick_pal, self.cant_lab, "", "", "")
         jos.move("x", lat1.thick)
+        jos.move("y", self.cant_lab)
         self.append(jos)
         # self.palOO.append(jos)
         lat2 = BoardPal(self.label + ".lat2", self.height, self.depth, self.thick_pal, self.cant_lab, "",
@@ -828,7 +829,13 @@ class TopBox(Cabinet):
                        self.thick_pal, self.cant_lab, "", "", "")
         sus.move("z", lat1.length - sus.thick)
         sus.move("x", lat1.thick)
+        sus.move("y",self.cant_lab)
         self.append(sus)
+
+        self.assemble_pal(lat1, jos, "wood_dowel", 6, 2)
+        self.assemble_pal(lat1, sus, "wood_dowel", 6, 2)
+        self.assemble_pal(lat2, jos, "wood_dowel", 6, 2)
+        self.assemble_pal(lat2, sus, "wood_dowel", 6, 2)
 
         self.add_pfl()
 

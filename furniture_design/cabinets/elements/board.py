@@ -30,7 +30,7 @@ class Board:
         self.type = ""  # pal, pfl, front
         self.material = ""
         self.price = 0
-        self.position_list = []
+        self.position_list = [] #
         self.cut_coords = cut_coords
 
         self.check_board()
@@ -93,7 +93,140 @@ class Board:
         return float(self.length * self.width / 1000000)
 
     def print(self):
-        print(f"Board type {self.type}, {self.label}, [{self.length} x {self.width} x {self.thick}], {self.material}")
+        print(f"Board type {self.type}, {self.label}, [{self.length} x {self.width} x {self.thick}], {self.material}, "
+              f"position {self.position}")
+
+    def calculate_connection_surface(board1, board2):
+        """
+        Calculate the surface where board1 and board2 connect, including perpendicular assemblies.
+
+        Parameters:
+        - board1: First board object (with position and size).
+        - board2: Second board object (with position and size).
+
+        Returns:
+        - A dictionary describing the connection surface:
+          - 'board1_face': Which face of board1 is involved (e.g., 'top', 'bottom', 'left', etc.).
+          - 'board2_face': Which face of board2 is involved (e.g., 'top', 'bottom', 'left', etc.).
+          - 'board1_dim': x_min, x_max, Y_min, y_max as a rectangle of the projection of the connection area on the respective face of the board.
+          - 'dimensions': The length and width of the connection surface.
+          - 'offset': The (x, y, z) coordinates of the connection surface start in the global cabinet space.
+        """
+
+        # Extract position and size of board1
+        length1, width1, thickness1, offset1_x, offset1_y, offset1_z = board1.position
+        print(board1.position_list)
+
+        # Extract position and size of board2
+        length2, width2, thickness2, offset2_x, offset2_y, offset2_z = board2.position
+        print(board2.position_list)
+
+        # Calculate bounding boxes for each board in the global coordinate system
+        box1 = {
+            'x_min': min(offset1_x, offset1_x + length1),
+            'x_max': max(offset1_x, offset1_x + length1),
+            'y_min': min(offset1_y, offset1_y + width1),
+            'y_max': max(offset1_y, offset1_y + width1),
+            'z_min': min(offset1_z, offset1_z + thickness1),
+            'z_max': max(offset1_z, offset1_z + thickness1),
+        }
+
+        box2 = {
+            'x_min': min(offset2_x, offset2_x + length2),
+            'x_max': max(offset2_x, offset2_x + length2),
+            'y_min': min(offset2_y, offset2_y + width2),
+            'y_max': max(offset2_y, offset2_y + width2),
+            'z_min': min(offset2_z, offset2_z + thickness2),
+            'z_max': max(offset2_z, offset2_z + thickness2),
+        }
+
+        # Check for perpendicular assemblies (where one board's face connects to another's edge)
+        # Case A: board1's bottom connects to board2's front face
+        if box1['z_min'] == box2['z_max'] and \
+                (box1['x_min'] < box2['x_max'] and box1['x_max'] > box2['x_min']) and \
+                (box1['y_min'] < box2['y_max'] and box1['y_max'] > box2['y_min']):
+            return {
+                'board1_face': 'down',  # board1's bottom face
+                'board2_face': 'front',  # board2's top face
+                'dimensions': (length1, width1),  # Connect along length and width of the face
+                'offset': (offset1_x, offset1_y, offset1_z)  # Starting point of connection
+            }
+
+        # Case E: board1's front connects to board2's up side (perpendicular assembly)
+        if box1['x_max'] == box2['x_min'] and \
+                (box1['z_min'] < box2['z_max'] and box1['z_max'] > box2['z_min']) and \
+                (box1['y_min'] < box2['y_max'] and box1['y_max'] > box2['y_min']):
+            return {
+                'board1_face': 'front',  # board1's back face
+                'board1_dim': (offset2_y, offset2_y + width2, offset2_z, offset2_z + thickness2), # x min, x max, y min, y max
+                'board2_face': 'up',  # board2's left face
+                'board2_dim': (0, width2, 0, thickness2),
+            }
+
+        # Case G: board1's back connects to board2's down side (perpendicular assembly)
+        if box1['x_min'] == box2['x_max'] and \
+                (box1['z_min'] < box2['z_max'] and box1['z_max'] > box2['z_min']) and \
+                (box1['y_min'] < box2['y_max'] and box1['y_max'] > box2['y_min']):
+            return {
+                'board1_face': 'back',  # board1's back face
+                'board1_dim': (offset2_y, offset2_y + width2, offset2_z, offset2_z + thickness2), # x min, x max, y min, y max
+                'board2_face': 'down',  # board2's left face
+                'board2_dim': (0, width2, 0, thickness2),
+            }
+
+
+        # Case 3: board1's right face connects to board2's bottom face (perpendicular assembly)
+        if box1['y_min'] == box2['y_max'] and \
+                (box1['x_min'] < box2['x_max'] and box1['x_max'] > box2['x_min']) and \
+                (box1['z_min'] < box2['z_max'] and box1['z_max'] > box2['z_min']):
+            return {
+                'board1_face': 'right',  # board1's right face
+                'board2_face': 'down',  # board2's bottom face
+                'dimensions': (length1, thickness1),  # Connect along length and thickness
+                'offset': (offset1_x, offset1_y, offset1_z)  # Starting point of connection
+            }
+
+        # # Case H: board1's front face connects to board2's bottom face (perpendicular assembly)
+        # if box1['x_max'] == box2['x_min'] and \
+        #         (box1['z_min'] < box2['z_max'] and box1['z_max'] > box2['z_min']) and \
+        #         (box1['y_min'] < box2['y_max'] and box1['y_max'] > box2['y_min']):
+        #     return {
+        #         'board1_face': 'front',  # board1's right face
+        #         'board1_dim': (box2['z_max'], box2['y_max']),
+        #         'board2_face': 'down',  # board2's bottom face
+        #         'board2_dim': (box2['z_max'], box2['y_max']),
+        #         'dimensions': (length1, thickness1),  # Connect along length and thickness
+        #         'offset': (offset1_x, offset1_y, offset1_z)  # Starting point of connection
+        #     }
+        #
+        # # Case 4: board1's back face connects to board2's bottom face (perpendicular assembly)
+        # if box1['x_min'] == box2['x_max'] and \
+        #         (box1['z_min'] < box2['z_max'] and box1['z_max'] > box2['z_min']) and \
+        #         (box1['y_min'] < box2['y_max'] and box1['y_max'] > box2['y_min']):
+        #     return {
+        #         'board1_face': 'back',  # board1's right face
+        #         'board1_dim': (box2['z_max'], box2['y_max']),
+        #         'board2_face': 'down',  # board2's bottom face
+        #         'board2_dim': (box2['z_max'], box2['y_max']),
+        #         'dimensions': (length1, thickness1),  # Connect along length and thickness
+        #         'offset': (offset1_x, offset1_y, offset1_z)  # Starting point of connection
+        #     }
+
+        # Case 4: Check if board1 and board2 are aligned face-to-face (parallel)
+        # This is a basic edge-to-edge or face-to-face connection, handled similarly as before
+        # Example: board1's right face aligns with board2's left face
+        if abs(offset1_x + length1 - offset2_x) < 1e-5:  # Tolerance for floating-point precision
+            return {
+                'board1_face': 'right',  # board1's right face
+                'board2_face': 'left',  # board2's left face
+                'dimensions': (width1, thickness1),  # Connect along width and thickness
+                'offset': (offset1_x + length1, offset1_y, offset1_z)  # Starting point of connection
+            }
+
+        # Return None if no valid connection is found
+        return None
+
+
 
     def get_price_for_item(self, item_type, material):
         """
@@ -149,6 +282,8 @@ class Board:
         this method checks for issues with how a board is defined and prints ERRORS
         :return: None
         """
+        if (self.width or self.length) < 180:
+            print("WARNING: Can't apply cant on " + self.label + ". Width or length < 180mm. Additional costs might apply.")
         if (self.width or self.length) > 2000:
             print("ERROR: Potential assembly issue: " + self.label + " Can't be transported and is difficult to handle. "
                                                                      "Use boards shorter than 2 meters")
@@ -168,13 +303,14 @@ class BoardPal(Board):
     def drill(self, surface, x, y, diameter=6):
         """
         adds a list of parameters of a hole in the board's drill list
-        :param surface: front, up, down, left, right
+        :param surface: front, back, up, down, left, right
         :param x: the x coordinate of the hole center
         :param y: the y coordinate of the hole center
         :param diameter: diameter of the hole in mm
         :return: none
         """
         self.drill_list.append([diameter, surface, int(x), int(y)])
+        print("DEBUG: Drilling " + self.label, diameter, surface, int(x), int(y))
 
     def get_m_cant(self, cant_type):
         """

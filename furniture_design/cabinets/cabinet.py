@@ -79,6 +79,90 @@ class Cabinet(DrawersMixin, ShelvesMixin):
         self.append(placa)
         self.append(Accessory("surub PFL", 2 * round(self.height / 150) + 2 * round(self.width / 150)))
 
+    def get_element_list_by_type(self, element_type):
+        sub_list = []
+        for element in self.elements_list:
+            if element.type == element_type:
+                sub_list.append(element)
+        return sub_list
+
+    def generate_connection_list(self):
+        pal_list = self.get_element_list_by_type("pal")
+        for i in range(len(pal_list)):
+            for j in range(i + 1, len(pal_list)):
+                board1 = pal_list[i]
+                board2 = pal_list[j]
+                
+
+
+    def assemble_pal(self, board1, board2, assembly_type, diameter=0, connection_count=2):
+        """
+            Calculate the positions where holes should be drilled for assembling two boards and modifies each boards
+            drill list.
+
+            Parameters:
+            - board1: First board object (with position and size).
+            - board2: Second board object (with position and size).
+            - connection_method: Type of connection ("wood_dowel", "eccentric", "euro_screw")
+            - diameter: Diameter of the drill for the connection method.
+            - connection_count: The number of holes to drill (default is 2).
+
+            Returns: None
+            """
+        connection_surface = board1.calculate_connection_surface(board2)
+
+        if not connection_surface:
+            raise ValueError("No valid connection surface found between " + board1.label + "and " + board2.label + ".")
+
+        board1_face = connection_surface['board1_face']
+        board2_face = connection_surface['board2_face']
+        x1_min, x1_max, y1_min, y1_max = connection_surface['board1_dim']
+        x2_min, x2_max, y2_min, y2_max = connection_surface['board2_dim']
+        connection_length = x1_max - x1_min
+        connection_width = y1_max - y1_min
+
+        if connection_count > 1:
+            hole_spacing = connection_length / (connection_count + 1) # Uniformly spaced along the connection length
+        else:
+            hole_spacing = connection_length / 2 # If only one hole, place it in the middle
+
+        if assembly_type == "wood_dowel":
+
+            for i in range(1, connection_count + 1):
+                # Calculate positions for both boards using the same spacing and relative alignment
+
+                # For board1
+                hole_x1 = x1_min + (hole_spacing * i)  # Along the length of the connection
+                hole_y1 = y1_min + (connection_width / 2) # - (diameter / 2)  # Centered in width
+                # hole_z1 = offset1_z  # Adjust the z-coordinate based on the face
+
+                board1.drill(board1_face, hole_x1, hole_y1, diameter)
+
+                hole_x2 = x2_min + (hole_spacing * i)  # Along the length of the connection
+                hole_y2 = y2_min + (connection_width / 2) # - (diameter / 2)  # Centered in width
+
+                board2.drill(board2_face, hole_x2, hole_y2, diameter)
+
+        if assembly_type == "eccentric":
+
+            for i in range(1, connection_count + 1):
+                # Calculate positions for both boards using the same spacing and relative alignment
+
+                # For board1
+                hole_x1 = x1_min + (hole_spacing * i)  # Along the length of the connection
+                hole_y1 = y1_min + (connection_width / 2) + 8 # Centered in width + 8 mm (standard for eccentric)
+                # hole_z1 = offset1_z  # Adjust the z-coordinate based on the face
+
+                board1.drill(board1_face, hole_x1, hole_y1, 25)
+
+                hole_x2 = x2_min + (hole_spacing * i)  # Along the length of the connection
+                hole_y2 = y2_min + (connection_width / 2) # - (diameter / 2)  # Centered in width
+
+                board2.drill(board2_face, hole_x2, hole_y2, 5)
+
+        else:
+            print("Assembly type not valid.")
+
     def get_item_by_type_label(self, typ, lab):
         """
 

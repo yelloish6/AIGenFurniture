@@ -261,7 +261,9 @@ def get_sheets_pfl(order):
     min_qty = float(get_min_qty_for_item("pfl", order.mat_pfl))
     m2_min = float(get_min_qty_for_item("pfl", order.mat_pfl)) * (SHEET_HEIGHT * SHEET_WIDTH / 1000000)
     sheets = math.ceil(m2_pfl / m2_min) * min_qty
-    if m2_pfl < min_qty:
+    if m2_pfl == 0:
+        return 0
+    elif 0 < m2_pfl < min_qty:
         return min_qty
     else:
         return sheets
@@ -325,7 +327,9 @@ def get_cost_manopera(order):
     h_rate = order.h_rate
     electrocasnice = order.nr_electrocasnice
     boards = order.get_boards_number()
-    pret_manop = math.ceil((8 + (boards * 0.17) + electrocasnice * 2 + get_m_blat(order) * 0.5) * h_rate*(1 + IMPOZIT))
+    h_proiect = order.h_proiect
+    print()
+    pret_manop = math.ceil((h_proiect + (boards * 0.17) + electrocasnice * 2 + get_m_blat(order) * 0.5) * h_rate*(1 + IMPOZIT))
     pret_manop_discount = pret_manop * (100 - discount) / 100
     return [pret_manop, pret_manop_discount]
 

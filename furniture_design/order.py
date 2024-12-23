@@ -31,6 +31,7 @@ class Order:
         :param discount:
         :param h_rate:
         :param nr_electrocasnice:
+        :param h_proiect:
         :param mat_pal:
         :param mat_pfl:
         :param mat_blat:
@@ -58,6 +59,7 @@ class Order:
         self.discount = customer_data.get("discount")
         self.h_rate = customer_data.get("h_rate")
         self.nr_electrocasnice = customer_data.get("nr_electrocasnice")
+        self.h_proiect = customer_data.get("h_proiect")
         self.mat_pal = customer_data.get("material_pal")
         self.mat_pfl = customer_data.get("material_pfl")
         self.mat_blat = customer_data.get("material_blat")

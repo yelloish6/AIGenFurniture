@@ -83,12 +83,12 @@ def generate_drill_file(order, output_path):
     for cabinet in order.cabinets_list:
         for element in cabinet.elements_list:
             if isinstance(element, BoardPal):
-                scale_factor = max(element.width / DRAW_AREA[1], element.length / DRAW_AREA[0])
+                scale_factor = max(element.width / DRAW_AREA[0], element.length / DRAW_AREA[1])
                 page = doc.new_page()
                 shape = page.new_shape()
                 shape.insert_text(fitz.Point(DRAW_AREA_START[0], DRAW_AREA_START[1]), element.label)
                 # shape.insert_text(fitz.Point(DRAW_AREA_START[0] + 60, DRAW_AREA_START[1]), str(element.length) + "X" + str(element.width))
-                p1 = fitz.Point(DRAW_AREA_START[0] + 50, DRAW_AREA_START[1] + 100)
+                p1 = fitz.Point(DRAW_AREA_START[0] + 0, DRAW_AREA_START[1] + 50)
                 p2 = fitz.Point(p1.x + element.width/scale_factor,
                                 p1.y + element.length/scale_factor)
                 board = fitz.Rect(p1, p2)
@@ -106,25 +106,39 @@ def generate_drill_file(order, output_path):
                         pos = fitz.Point(p1.x + (element.drill_list[i][2] / scale_factor),
                                                      p2.y - (element.drill_list[i][3] / scale_factor))
                         shape.draw_circle(pos, 1)
+
                         rect = (pos.x, pos.y - 7, pos.x + 30, pos.y + 7)
                         # shape.draw_rect(rect)
-                        shape.insert_textbox(rect, str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3]),
-                                             fontsize=6)
+                        shape.insert_textbox(rect, str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3])
+                                             + " #" + str(element.drill_list[i][0]), fontsize=5)
+
+                    if str(element.drill_list[i][1]) == "back":
+                        pos = fitz.Point(p1.x + (element.drill_list[i][2] / scale_factor),
+                                                     p2.y - (element.drill_list[i][3] / scale_factor))
+
+                        rect = (pos.x, pos.y - 7, pos.x + 30, pos.y + 7)
+                        # shape.draw_rect(rect)
+                        shape.insert_textbox(rect, "x|" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3])
+                                             + " #" + str(element.drill_list[i][0]), fontsize=5)
                         # shape.insert_text(fitz.Point(p1.x + (element.drill_list[i][2] / scale_factor),
                         #                              p2.y - (element.drill_list[i][3] / scale_factor)),
                         #                   str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3]))
                     elif str(element.drill_list[i][1]) == "right":
-                        shape.insert_text(fitz.Point(p2.x + 10, p2.y - (element.drill_list[i][2] / scale_factor)),
-                                          "< |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3]))
+                        shape.insert_text(fitz.Point(p2.x - 10, p2.y - (element.drill_list[i][2] / scale_factor)),
+                                          "> |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3])
+                                          + " #" + str(element.drill_list[i][0]), fontsize=5)
                     elif str(element.drill_list[i][1]) == "left":
-                        shape.insert_text(fitz.Point(p1.x - 10, p2.y - (element.drill_list[i][2] / scale_factor)),
-                                          "> |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3]))
+                        shape.insert_text(fitz.Point(p1.x + 10, p2.y - (element.drill_list[i][2] / scale_factor)),
+                                          "< |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3])
+                                          + " #" + str(element.drill_list[i][0]), fontsize=5)
                     elif str(element.drill_list[i][1]) == "up":
-                        shape.insert_text(fitz.Point(p1.x + (element.drill_list[i][2] / scale_factor), p1.y - 10),
-                                          "V |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3]))
+                        shape.insert_text(fitz.Point(p1.x + (element.drill_list[i][2] / scale_factor), p1.y + 5),
+                                          "^ |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3])
+                                          + " #" + str(element.drill_list[i][0]), fontsize=5)
                     elif str(element.drill_list[i][1]) == "down":
-                        shape.insert_text(fitz.Point(p1.x + (element.drill_list[i][2] / scale_factor), p2.y + 10),
-                                          "^ |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3]))
+                        shape.insert_text(fitz.Point(p1.x + (element.drill_list[i][2] / scale_factor), p2.y - 2),
+                                          "v |" + str(element.drill_list[i][2]) + "X" + str(element.drill_list[i][3])
+                                          + " #" + str(element.drill_list[i][0]), fontsize=5)
 
                 shape.finish(color=(0, 0, 0), fill=(0.9, 0.9, 0.9), width=1, fill_opacity=1)
                 shape.commit()

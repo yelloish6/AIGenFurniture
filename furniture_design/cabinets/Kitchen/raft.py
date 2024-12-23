@@ -26,7 +26,7 @@ class Raft(Cabinet):
         lat1 = BoardPal(self.label + ".lat", self.height - self.thick_pal, self.depth, self.thick_pal, self.cant_lab,
                         "", "", "")
         lat1.rotate("y")
-        lat1.move("x", self.thick_pal)
+        lat1.move("x", 2 * self.thick_pal)
         lat1.move("z", jos.thick)
         self.append(lat1)
 
@@ -34,7 +34,7 @@ class Raft(Cabinet):
         lat2 = BoardPal(self.label + ".lat", self.height - self.thick_pal, self.depth, self.thick_pal, self.cant_lab,
                         "", "", "")
         lat2.rotate("y")
-        lat2.move("x", jos.length)
+        lat2.move("x", jos.length + self.thick_pal)
         lat2.move("z", jos.thick)
         self.append(lat2)
 
