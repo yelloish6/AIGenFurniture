@@ -103,8 +103,8 @@ class BaseCorner(Cabinet):
         :param rules:
         :param cut_width:
         :param cut_depth:
-        :param l_r:
-        :param with_polita:
+        :param l_r: "left" or "right"
+        :param with_polita: true or false
         :return:
         """
 
@@ -783,16 +783,14 @@ class JollyBox(BaseBox):
         if width < 150:
             raise NameError("ERROR: Cos Jolly pentru Cabinetul ", self.label, "inexistent!")
         elif width < 200:
-            self.append(Accessory("Cos Jolly 150", 1))
-        elif width < 250:
-            self.append(Accessory("Cos Jolly 200", 1))
+            self.append(Accessory("Joly150500", 1))
         elif width < 300:
-            self.append(Accessory("Cos Jolly 250", 1))
+            self.append(Accessory("Joly240500", 1))
         else:
-            self.append(Accessory("Cos Jolly 300", 1))
+            self.append(Accessory("Joly300500", 1))
 
         self.add_pfl()
-        # self.addFront([[100, 100]], "door")
+        self.add_front([[100, 100]], "door")
 
 
 class TopBox(Cabinet):

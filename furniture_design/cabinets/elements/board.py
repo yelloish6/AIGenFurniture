@@ -371,3 +371,6 @@ class Blat(Board):
         super().__init__(label, length, width, thick)
         self.type = "blat"
         self.material = ""
+
+    def get_length(self):
+        return self.length/1000

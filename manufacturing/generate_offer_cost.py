@@ -55,7 +55,7 @@ def export_cost_sheet(order, output_folder):
                     unit = element.get_unit_for_item(element.type, element.material)
                 elif element.type == "blat":
                     material = element.material
-                    size = element.get_m2()
+                    size = element.get_length()
                     unit = element.get_unit_for_item(element.type, element.material)
                 elif element.type == "accessory":
                     material = element.label
